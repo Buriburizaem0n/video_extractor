@@ -1,5 +1,5 @@
 # series_extractor
-[English](https://github.com/Buriburizaem0n/video_extractor.git/readme_en.md)
+[English](https://github.com/Buriburizaem0n/video_extractor/blob/main/readme_en.md)
 ---
 一个 Python 脚本，用于递归扫描下载目录，将电影和电视剧根据元数据自动提取到不同目标目录，其他文件原地保留，方便后续添加到 Jellyfin 或其他媒体库。
 
