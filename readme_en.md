@@ -1,6 +1,8 @@
 # series_extractor
 
-A Python script that recursively scans a download directory and extracts movies and TV series into separate target directories based on metadata, while leaving other files in place—ideal for organizing content before adding to Jellyfin or another media library.
+[中文](https://github.com/Buriburizaem0n/video_extractor/blob/main/readme.md)
+---
+A Python script that recursively scans a downloads directory, identifies movies and TV series based on metadata, and creates symbolic links in separate target directories, while leaving all other files in place—ideal for organizing content before adding to Jellyfin or other media libraries.
 
 ## Features
 
@@ -8,18 +10,18 @@ A Python script that recursively scans a download directory and extracts movies 
 - Use `guessit` to extract metadata and automatically identify:
   - **TV series** (`type='episode'`): parse season and episode numbers from `SxxEyy` or `Exx` patterns.
   - **Movies** (`type='movie'`): parse title and release year.
-- **Extract and rename** files according to Jellyfin conventions:
-  - TV series: move to `<series_root>/<Series Title>/Season XX/Series Title - SXXEYY.ext`
-  - Movies: move to `<movie_root>/<Movie Title> (Year)/Movie Title (Year).ext` (if year is unavailable, `Movie Title.ext`)
-- **Non-media files** remain in the original download location—no deletion or movement.
+- **Extract and create symbolic links**:
+  - TV series: link to `<series_root>/<Series Title>/Season XX/Series Title - SXXEYY.ext`
+  - Movies: link to `<movie_root>/<Movie Title> (Year)/Movie Title (Year).ext` (or `Movie Title.ext` if year is unknown)
+- **Other non-media files** remain untouched in the download directory.
 - Support custom target roots:
   - `--movie-root` (default: `/mnt/external/movie`)
   - `--series-root` (default: `/mnt/external/series`)
-- Support dry-run mode (`-n` / `--dry-run`) to preview actions without making any changes.
+- Support dry-run mode (`-n` / `--dry-run`) to preview actions without creating links.
 
 ## Requirements
 
-- Python 3.6+
+- Python 3.6 or later
 - `guessit` library:
   ```bash
   pip install guessit
@@ -44,10 +46,10 @@ pip install -r requirements.txt
 ## Usage Examples
 
 ```bash
-# Dry-run: preview without moving files
+# Dry-run: preview without creating links
 python series_extractor.py /path/to/downloads -n
 
-# Actual extraction: specify movie and series targets
+# Create symlinks: specify download root, movie and series targets
 python series_extractor.py /path/to/downloads \
   --movie-root /mnt/external/movie \
   --series-root /mnt/external/series
@@ -56,8 +58,8 @@ python series_extractor.py /path/to/downloads \
 ### Sample Output
 
 ```
-Moving: /downloads/Inception.2010.1080p.mkv -> /mnt/external/movie/Inception (2010)/Inception (2010).mkv
-Moving: /downloads/This.is.Us.S01E01.mkv -> /mnt/external/series/This Is Us/Season 01/This Is Us - S01E01.mkv
+Linking: /downloads/Inception.2010.1080p.mkv -> /mnt/external/movie/Inception (2010)/Inception (2010).mkv
+Linking: /downloads/This.is.Us.S01E01.mkv -> /mnt/external/series/This Is Us/Season 01/This Is Us - S01E01.mkv
 Skipping non-media file: /downloads/readme.txt
 ```
 
